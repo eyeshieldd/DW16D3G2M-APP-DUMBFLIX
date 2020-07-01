@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import "../css/Payment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { API } from "../../config/api";
-import { FileUpload } from "../../redux/actions/payment";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { uploadBukti } from "../../redux/actions/payment";
+
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-const Pay = ({ FileUpload, auth: { user } }) => {
+const Pay = ({ uploadBukti, auth: { user } }) => {
 	const [formData, setFormData] = useState({
 		accountNumber: "",
 	});
@@ -47,7 +47,7 @@ const Pay = ({ FileUpload, auth: { user } }) => {
 	const onSubmit = (e) => {
 		const userId = user.id;
 		e.preventDefault();
-		FileUpload(file, userId, clearForm);
+		uploadBukti(file, userId, clearForm);
 	};
 
 	const inputFileRef = useRef(null);
@@ -68,9 +68,9 @@ const Pay = ({ FileUpload, auth: { user } }) => {
 						Premium
           </h1>
 					<p>
-						Bayar sekarang dan nikmati streaming film-film yang kekinian dari{" "}
-						<span className="red">DUMBFLIX </span> <br />{" "}
-						<span className="red">DUMBFLIX </span> : 0981312323
+						Bayar sekarang dan nikmati streaming lagu2 yang kekinian dari{" "}
+						<span className="red">DUMBSOUND </span> <br />{" "}
+						<span className="red">DUMBSOUND </span> : 0909009
           </p>
 					<form onSubmit={(e) => onSubmit(e)}>
 						<div className="form-payment">
@@ -148,4 +148,4 @@ const mapStateToProps = (state) => ({
 	auth: state.auth,
 });
 
-export default connect(mapStateToProps, { FileUpload })(Pay);
+export default connect(mapStateToProps, { uploadBukti })(Pay);

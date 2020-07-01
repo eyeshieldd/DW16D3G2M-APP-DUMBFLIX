@@ -1,25 +1,36 @@
 import React from "react";
 
 import ReactPlayer from "react-player/lazy";
+import thumbnail from '../../../images/videothumbnail/playnow.png';
 
 import "./Thumbnail.css";
 
-const VideoThumbnail = ({ thumbnail, defaultUrl }) => {
+const VideoThumbnail = ({ handlePlayNow, playNow, defaultUrl }) => {
+	let type = '';
+	console.log(defaultUrl);
 
-	return (
-		<div className="video">
-			<div className="player-wrapper ">
-				<ReactPlayer
-					className="react-player"
-					url={defaultUrl}
-					width="100%"
-					height="100%"
-					controls={true}
-				// light={thumbnail}
-				/>
+	return !playNow ? (
+		<div
+			style={{
+				width: '100%',
+				height: '500px',
+				background: `linear-gradient(to bottom, rgba(0,0, 0, 0), black), url('${thumbnail}'), #1c1c1c`
+			}}
+			className="video-image"
+			onClick={() => handlePlayNow(defaultUrl)}
+		/>
+	) : (
+			<div className="video">
+				<div className="player-wrapper ">
+					<ReactPlayer
+						className="react-player"
+						url={playNow}
+						width="100%"
+						height="100%"
+						controls={true}
+					/>
+				</div>
 			</div>
-		</div>
-	);
+		);
 };
-
 export default VideoThumbnail;

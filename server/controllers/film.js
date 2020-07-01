@@ -31,24 +31,17 @@ exports.getFilm = async (req, res) => {
 				},
 				{
 					include: [
-						/*{
-													model: Episode,
-													as: 'episodes',
-													attributes: {
-														exclude: ['createdAt', 'updatedAt', 'filmId', 'FilmId']
-													}
-												},*/
 						{
 							model: Category,
 							as: 'category',
 							attributes: {
-								exclude: [ 'createdAt', 'updatedAt' ]
+								exclude: ['createdAt', 'updatedAt']
 							}
 						}
 					],
-					order: [ [ 'createdAt', 'DESC' ] ],
+					order: [['createdAt', 'DESC']],
 					attributes: {
-						exclude: [ 'createdAt', 'updatedAt', 'categoryId' ]
+						exclude: ['createdAt', 'updatedAt', 'categoryId']
 					}
 				},
 				paginate({
@@ -94,20 +87,20 @@ exports.getFilmEpisodeCategory = async (req, res) => {
 					model: Episode,
 					as: 'episodes',
 					attributes: {
-						exclude: [ 'createdAt', 'updatedAt' ]
+						exclude: ['createdAt', 'updatedAt']
 					}
 				},
 				{
 					model: Category,
 					as: 'category',
 					attributes: {
-						exclude: [ 'createdAt', 'updatedAt' ]
+						exclude: ['createdAt', 'updatedAt']
 					}
 				}
 			],
 
 			attributes: {
-				exclude: [ 'createdAt', 'updatedAt', 'categoryId' ]
+				exclude: ['createdAt', 'updatedAt', 'categoryId']
 			}
 		});
 
@@ -144,20 +137,20 @@ exports.getDetailFilm = async (req, res) => {
 					model: Episode,
 					as: 'episodes',
 					attributes: {
-						exclude: [ 'createdAt', 'updatedAt', 'filmId', 'FilmId' ]
+						exclude: ['createdAt', 'updatedAt', 'filmId', 'FilmId']
 					}
 				},
 				{
 					model: Category,
 					as: 'category',
 					attributes: {
-						exclude: [ 'createdAt', 'updatedAt' ]
+						exclude: ['createdAt', 'updatedAt']
 					}
 				}
 			],
-			order: [ [ { model: Episode, as: 'episodes' }, 'id', 'DESC' ] ],
+			order: [[{ model: Episode, as: 'episodes' }, 'id', 'DESC']],
 			attributes: {
-				exclude: [ 'createdAt', 'updatedAt', 'categoryId' ]
+				exclude: ['createdAt', 'updatedAt', 'categoryId']
 			}
 		});
 
@@ -225,11 +218,11 @@ exports.addFilm = async (req, res) => {
 					model: Category,
 					as: 'category',
 					attributes: {
-						exclude: [ 'createdAt', 'updatedAt' ]
+						exclude: ['createdAt', 'updatedAt']
 					}
 				},
 				attributes: {
-					exclude: [ 'createdAt', 'updatedAt' ]
+					exclude: ['createdAt', 'updatedAt']
 				}
 			});
 
@@ -294,11 +287,11 @@ exports.editFilm = async (req, res) => {
 					model: Category,
 					as: 'category',
 					attributes: {
-						exclude: [ 'createdAt', 'updatedAt' ]
+						exclude: ['createdAt', 'updatedAt']
 					}
 				},
 				attributes: {
-					exclude: [ 'createdAt', 'updatedAt', 'categoryId' ]
+					exclude: ['createdAt', 'updatedAt', 'categoryId']
 				}
 			});
 			return res.send({

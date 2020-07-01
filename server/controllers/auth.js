@@ -1,24 +1,26 @@
-const { User } = require("../models");
-const Joi = require("@hapi/joi");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const { User } = require('../models');
+const Joi = require('@hapi/joi');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.cekAuth = async (req, res) => {
+  console.log(req.user.id);
+
   try {
     const user = await User.findOne({
       where: {
-        id: req.user.id,
+        id: req.user.id
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "categoryId", "password"],
-      },
+        exclude: ['createdAt', 'updatedAt', 'categoryId', 'password']
+      }
     });
     res.status(200).send({
-      data: user,
+      data: user
     });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 };
 
@@ -26,29 +28,29 @@ exports.login = async (req, res) => {
   try {
     const schema = Joi.object({
       email: Joi.string().email().min(6).required(),
-      password: Joi.string().min(6).required(),
+      password: Joi.string().min(6).required()
     });
     const { error } = schema.validate(req.body);
 
     if (error)
       res.status(400).send({
         error: {
-          message: error.details[0].message,
-        },
+          message: error.details[0].message
+        }
       });
 
     const { email, password } = req.body;
     const user = await User.findOne({
       where: {
-        email,
-      },
+        email
+      }
     });
 
     if (!user)
       return res.status(400).send({
         error: {
-          message: "Wrong Email or Password",
-        },
+          message: 'Wrong Email or Password'
+        }
       });
 
     const validPass = await bcrypt.compare(password, user.password);
@@ -56,13 +58,13 @@ exports.login = async (req, res) => {
     if (!validPass)
       return res.status(400).send({
         error: {
-          message: "Wrong Email or Password",
-        },
+          message: 'Wrong Email or Password'
+        }
       });
 
     const token = jwt.sign(
       {
-        id: user.id,
+        id: user.id
       },
       process.env.SECRET_KEY
     );
@@ -70,15 +72,15 @@ exports.login = async (req, res) => {
     res.status(200).send({
       data: {
         email,
-        token,
-      },
+        token
+      }
     });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
       error: {
-        message: "Server Error",
-      },
+        message: 'Server Error'
+      }
     });
   }
 };
@@ -92,7 +94,7 @@ exports.register = async (req, res) => {
       gender: Joi.string().required(),
       phone: Joi.string().min(10).required(),
       address: Joi.string().min(10).required(),
-      role: Joi.required(),
+      role: Joi.required()
     });
     const { error } = schema.validate(req.body);
 
@@ -101,22 +103,22 @@ exports.register = async (req, res) => {
     if (error)
       return res.status(400).send({
         error: {
-          message: error.details[0].message,
-        },
+          message: error.details[0].message
+        }
       });
 
     const { email, password } = req.body;
 
     const checkEmail = await User.findOne({
       where: {
-        email,
-      },
+        email
+      }
     });
     if (checkEmail)
       return res.status(400).send({
         error: {
-          message: "Email already exist",
-        },
+          message: 'Email already exist'
+        }
       });
 
     const subscribe = false;
@@ -125,11 +127,11 @@ exports.register = async (req, res) => {
     const user = await User.create({
       ...req.body,
       password: hashedPassword,
-      subscribe,
+      subscribe
     });
     const token = jwt.sign(
       {
-        id: user.id,
+        id: user.id
       },
       process.env.SECRET_KEY
     );
@@ -137,15 +139,15 @@ exports.register = async (req, res) => {
     res.status(200).send({
       data: {
         email,
-        token,
-      },
+        token
+      }
     });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
       error: {
-        message: "Server Error",
-      },
+        message: 'Server Error'
+      }
     });
   }
 };

@@ -76,7 +76,7 @@ const DetailMovie = ({
 									position: 'relative'
 								}}
 							>
-								{/* <button
+								<button
 									className="btn-merah"
 									style={{
 										float: 'right',
@@ -88,7 +88,7 @@ const DetailMovie = ({
 									onClick={() => openAddEpisode()}
 								>
 									Add Episode
-								</button> */}
+								</button>
 							</div>
 						) : null}
 						<div className="details">
@@ -137,5 +137,4 @@ const mapStateToProps = (state) => ({
 	film: state.film,
 	auth: state.auth
 });
-
 export default connect(mapStateToProps, { getDetailsFilm })(DetailMovie);

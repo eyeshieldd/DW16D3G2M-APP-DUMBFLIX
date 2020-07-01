@@ -7,7 +7,7 @@ const Description = ({
   return (
     <div className="description-container">
       <div className="movie">
-        <div className="movie-image" style={{ marginTop: 4 }}>
+        <div className="movie-image">
           <img
             alt={title}
             src={`http://localhost:5000/uploads/${thumbnailFilm}`}
